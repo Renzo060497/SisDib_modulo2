@@ -76,7 +76,12 @@ def main():
             if(pedido_result.get("posible")):
                 print("Pedido posible")
                 reservar(pedido)
-                # Enviar un mensaje al siguiente modulo
+                
+                socket2 = context.socket(zmq.REQ)
+                socket2.connect('tcp://localhost:5556')
+
+                socket.send_json(pedido)
+
                 socket.send_json(
                     {
                         "posible": True,
